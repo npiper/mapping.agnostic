@@ -35,4 +35,6 @@ Quality of Service:
 * Mapping Rule Identifer
 
 
-
+## Libraries Used
+* ActiveMQ (Queue Framework)
+* 
