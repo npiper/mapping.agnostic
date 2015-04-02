@@ -6,7 +6,7 @@
  <groupId>com.solveapuzzle.mapping.agnostic</groupId>
   <artifactId>build.parent</artifactId>
   <version>1.0-SNAPSHOT</version>  
-
+  <relativePath>../build/build.parent</relativePath>
 </parent>
   <groupId>com.solveapuzzle.mapping.agnostic</groupId>
   <artifactId>map-api</artifactId>
