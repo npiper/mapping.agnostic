@@ -9,9 +9,9 @@
 
   <modules>
     <module>build/build.parent</module>
+    <module>map-api</module>
     <module>service</module>
     <module>container</module>
-    <module>map-api</module>
     <module>map-repository</module>
   </modules>
 
