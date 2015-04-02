@@ -14,6 +14,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
+<!-- example from http://progers-blog.blogspot.com.au/2011/08/setup-maven-checkstyle-plugin.html -->
+
   <dependencies>
  <dependency>
 	<groupId>junit</groupId>
