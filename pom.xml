@@ -10,6 +10,7 @@
   <modules>
     <module>build/build.parent</module>
     <module>map-api</module>
+    <module>engine</module> 
     <module>service</module>
     <module>container</module>
     <module>map-repository</module>
