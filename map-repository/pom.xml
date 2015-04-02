@@ -3,15 +3,14 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
- <groupId>com.solveapuzzle.mapping.agnostic</groupId>
-  <artifactId>build.parent</artifactId>
-  <version>1.0-SNAPSHOT</version>  
-
-</parent>
+    <groupId>com.solveapuzzle.mapping.agnostic</groupId>
+    <artifactId>core</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
   <groupId>com.solveapuzzle.mapping.agnostic</groupId>
-  <artifactId>map-api</artifactId>
+  <artifactId>map-repository</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>map-api</name>
+  <name>map-repository</name>
   <url>http://maven.apache.org</url>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

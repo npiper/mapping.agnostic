@@ -1,0 +1,72 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.solveapuzzle.mapping.agnostic</groupId>
+  <artifactId>build.parent</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <name>build.parent</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+ <dependency>
+	<groupId>junit</groupId>
+	<artifactId>junit</artifactId>
+	<version>4.12</version>
+        <scope>test</scope>
+</dependency>
+
+<dependency>
+	<groupId>org.mockito</groupId>
+	<artifactId>mockito-core</artifactId>
+	<version>1.10.19</version>
+        <scope>test</scope>
+</dependency> 
+
+  </dependencies>
+
+<build>
+   <plugins>
+
+<plugin>  
+         <groupId>org.apache.maven.plugins</groupId>  
+         <!-- Plugin that gives ability to generate your projects site -->  
+         <artifactId>maven-site-plugin</artifactId>  
+         <version>3.0-beta-2</version>  
+         <configuration>  
+           <!-- Reports that will be displayed on a generated site -->  
+           <reportPlugins>  
+             <!-- Produces a cross-reference of the project's sources. This is useful  
+                for other reports like PMD or Checkstyle. When this plugin is used with  
+                checkstyle you can see code that produces style warning/error in the report. -->  
+             <plugin>  
+               <groupId>org.apache.maven.plugins</groupId>  
+               <artifactId>maven-jxr-plugin</artifactId>  
+               <version>2.1</version>  
+               <configuration>  
+                 <aggregate>true</aggregate>  
+               </configuration>  
+             </plugin>  
+             <!-- Checks projects code conventions -->  
+             <plugin>  
+               <groupId>org.apache.maven.plugins</groupId>  
+               <artifactId>maven-checkstyle-plugin</artifactId>  
+               <version>2.6</version>  
+               <configuration>  
+                 <configLocation>check_style.xml</configLocation>  
+               </configuration>  
+             </plugin>  
+           </reportPlugins>  
+         </configuration>  
+       </plugin>  
+
+   </plugins>
+</build>
+
+</project>

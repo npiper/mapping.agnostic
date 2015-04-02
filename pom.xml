@@ -8,9 +8,11 @@
   <name>core</name>
 
   <modules>
+    <module>build/build.parent</module>
     <module>service</module>
     <module>container</module>
     <module>map-api</module>
+    <module>map-repository</module>
   </modules>
 
 </project>
