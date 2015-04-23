@@ -15,6 +15,7 @@
   <name>engines</name>
   <url>http://maven.apache.org</url>
   <modules>
+    <module>engine-common</module>
     <module>openSourceDFDL</module>
     <module>saxon</module>
     <module>xerces</module>

@@ -8,27 +8,15 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
   <groupId>com.solveapuzzle.mapping.agnostic</groupId>
-  <artifactId>xerces</artifactId>
+  <artifactId>engine-common</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>xerces</name>
+  <name>engine-common</name>
   <url>http://maven.apache.org</url>
+  
   <dependencies>
-<dependency>
-	<groupId>xerces</groupId>
-	<artifactId>xercesImpl</artifactId>
-	<version>2.11.0</version>
-</dependency>
-<dependency>
-	<groupId>xalan</groupId>
-	<artifactId>xalan</artifactId>
-	<version>2.7.1</version>
-</dependency>
-
-
-
   	<dependency>
   		<groupId>com.solveapuzzle.mapping.agnostic</groupId>
-  		<artifactId>engine-common</artifactId>
+  		<artifactId>map-api</artifactId>
   		<version>1.0-SNAPSHOT</version>
   	</dependency>
   </dependencies>
