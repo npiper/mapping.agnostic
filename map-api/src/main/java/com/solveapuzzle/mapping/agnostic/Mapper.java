@@ -1,8 +1,10 @@
 package com.solveapuzzle.mapping.agnostic;
 
-public interface Mapper<A, B> {
+import java.io.OutputStream;
 
-	public B map(A source, MappingConfiguration config)
+public interface Mapper<A,B extends OutputStream> {
+
+	public void map(A source, B resultStream, MappingConfiguration config)
 			throws MappingException, ConfigurationException;
 
 }

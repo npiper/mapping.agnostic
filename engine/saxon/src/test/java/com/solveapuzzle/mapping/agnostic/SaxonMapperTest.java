@@ -1,17 +1,17 @@
 package com.solveapuzzle.mapping.agnostic;
 
+import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringBufferInputStream;
-import java.io.StringReader;
-
-import javax.xml.transform.Result;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.mockito.internal.util.io.IOUtil;
 
 public class SaxonMapperTest {
 
@@ -45,15 +45,23 @@ public class SaxonMapperTest {
 
 	@Test
 	public void testTransformation() throws MappingException,
-			ConfigurationException {
+			ConfigurationException, UnsupportedEncodingException {
 
 		// Incoming Mapping config
 		MappingConfiguration config = Mockito.mock(MappingConfiguration.class);
 		Mockito.when(config.getMappingIdentifer()).thenReturn("KEY");
+  
+ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		
+		Writer out
+		   = new BufferedWriter(new OutputStreamWriter(bos));
+		
+		
+		mapper.map(this.xmlSource, bos, config);
+		
+		String result = new String(bos.toByteArray(),"UTF-8");
 
-		Result result = mapper.map(this.xmlSource, config);
-
-		result.toString();
+		System.out.println(result);
 	}
 
 }

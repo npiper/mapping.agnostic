@@ -1,7 +1,8 @@
 package com.solveapuzzle.mapping.agnostic;
 
-public interface MapperFactory<A,B> {
+import java.io.OutputStream;
 
+public interface MapperFactory<A,B extends OutputStream> {
 	
 	public Mapper<A,B> createMapper(String mappingEngineKey);
 }

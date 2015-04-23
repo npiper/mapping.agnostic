@@ -1,14 +1,16 @@
 package com.solveapuzzle.mapping.agnostic;
 
+import java.io.OutputStream;
 import java.io.StringReader;
 
-import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 
+
+
 public class SaxonMapper implements
-		Mapper<javax.xml.transform.Source, javax.xml.transform.Result> {
+		Mapper<javax.xml.transform.Source,OutputStream> {
 
 	MappingRepository repository;
 
@@ -16,7 +18,7 @@ public class SaxonMapper implements
 		this.repository = repo;
 	}
 
-	public Result map(Source xmlSource, MappingConfiguration config)
+	public void map(Source xmlSource, OutputStream resultStream, MappingConfiguration config)
 			throws MappingException, ConfigurationException {
 		// TODO Auto-generated method stub
 
@@ -35,7 +37,8 @@ public class SaxonMapper implements
 
 		// Set up the Result
 		javax.xml.transform.Result result = new javax.xml.transform.stream.StreamResult(
-				System.out);
+				resultStream);
+		
 
 		// create an instance of TransformerFactory
 		// The underlying JAXP Implementation is attached
@@ -54,7 +57,7 @@ public class SaxonMapper implements
 			throw new MappingException(e.getMessage());
 		}
 
-		return result;
+
 	}
 
 }
