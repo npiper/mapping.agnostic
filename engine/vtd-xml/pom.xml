@@ -20,5 +20,10 @@
 </dependency>
   
 
-</dependencies>
+  	<dependency>
+  		<groupId>com.solveapuzzle.mapping.agnostic</groupId>
+  		<artifactId>map-api</artifactId>
+  		<version>1.0-SNAPSHOT</version>
+  	</dependency>
+  </dependencies>
 </project>
