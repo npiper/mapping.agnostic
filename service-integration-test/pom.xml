@@ -7,7 +7,6 @@
     <artifactId>core</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
-  <groupId>com.solveapuzzle.mapping.agnostic</groupId>
   <artifactId>service-integration-test</artifactId>
   <version>1.0-SNAPSHOT</version>
   <name>service-integration-test</name>
@@ -44,7 +43,6 @@
     	<scope>test</scope>
     </dependency>
     
-    
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
@@ -52,5 +50,27 @@
 			<scope>test</scope>
 		</dependency>
     
+    
+    <!-- Wiring dependencies / Glue Code -->
+
+ <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <version>1.2.3.RELEASE</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jms</artifactId>
+            <version>4.0.8.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-broker</artifactId>
+            <version>5.9.1</version>
+        </dependency>
+
+
+
   </dependencies>
 </project>
