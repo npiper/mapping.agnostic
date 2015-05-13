@@ -1,5 +1,11 @@
 package com.solveapuzzle.mapping.agnostic;
 
+// Test is referenced from Spring by Example -- http://www.springbyexample.org/examples/simple-spring-jms.html
+// Starts up a local ActiveMQ container with a XML.IN Queue
+// Starts up a JMS Listener & JMS Producer
+// Sends 100 messages
+// Confirms Listener receives 100 messages
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
