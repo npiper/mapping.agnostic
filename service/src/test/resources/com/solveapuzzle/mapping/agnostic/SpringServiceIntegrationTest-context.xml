@@ -12,13 +12,6 @@
 
 	<context:component-scan base-package="com.solveapuzzle.mapping.agnostic" />
 
-	<!-- Mapping Engine -->
-    <bean id="mappingEngine" class="com.solveapuzzle.mapping.agnostic.MappingEngineImpl">
-      <property name="mappingRepository" ref="mappingRepository"/>
-      <property name="mapperFactory" ref="mapperFactory"/>
-    </bean>
-
-
 	<!-- MappingRepository -->
     <bean id="mappingRepository" class="com.solveapuzzle.mapping.agnostic.MappingRepositoryTestImpl"/>
 
@@ -30,8 +23,21 @@
    </bean>
 
 	<!-- Mapper(s) -->
-	<bean id="saxonMapper" class="com.solveapuzzle.mapping.agnostic.SaxonMapper" />
-	<bean id="xercesMapper" class="com.solveapuzzle.mapping.agnostic.XercesMapper" />
+	<bean id="saxonMapper" class="com.solveapuzzle.mapping.agnostic.SaxonMapper">
+	   <property name="mappingRepository" ref="mappingRepository"/>
+	</bean>
+	<bean id="xercesMapper" class="com.solveapuzzle.mapping.agnostic.XercesMapper">
+	   <property name="mappingRepository" ref="mappingRepository"/>
+	</bean>
+
+
+	<!-- Mapping Engine -->
+    <bean id="mappingEngine" class="com.solveapuzzle.mapping.agnostic.MappingEngineImpl">
+      <property name="mappingRepository" ref="mappingRepository"/>
+      <property name="mapperFactory" ref="mapperFactory"/>
+    </bean>
+
+
 
 
 </beans>
