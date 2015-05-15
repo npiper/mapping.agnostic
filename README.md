@@ -22,6 +22,10 @@ Bias your open source frameworks, but separate the 'implemenation' or lockin fro
 * XQuery
 * XSLT 1
 * XSLT 2
+* Saxon / Xerces
+* vtd
+* xom
+* ...
 
 And... we return a detailed 'MappingFault' depending on what went wrong that tells us when, where, what element,..
 

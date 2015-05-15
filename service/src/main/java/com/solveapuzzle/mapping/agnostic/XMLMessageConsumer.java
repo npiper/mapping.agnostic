@@ -10,6 +10,9 @@ import javax.jms.MessageListener;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class XMLMessageConsumer implements MessageListener, IXMLMessageConsumer {
 
 	private ConnectionFactory factory;
