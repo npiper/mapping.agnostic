@@ -12,11 +12,32 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <!--  SINGLE PLACE TO CHANGE THE SPRING VERSION -->
+    <spring.version>4.1.6.RELEASE</spring.version>
   </properties>
 
 <!-- example from http://progers-blog.blogspot.com.au/2011/08/setup-maven-checkstyle-plugin.html -->
 
   <dependencies>
+  
+  <!--  GLUE FRAMEWORK Spring -->
+  
+       <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <version>1.2.3.RELEASE</version>
+        </dependency>
+        
+  
+  
+ <!--  Test Dependencies --> 
+      <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+        </dependency>    
+  
+ 
  <dependency>
 	<groupId>junit</groupId>
 	<artifactId>junit</artifactId>
