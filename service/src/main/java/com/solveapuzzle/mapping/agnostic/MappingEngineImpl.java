@@ -10,6 +10,9 @@ import java.nio.charset.Charset;
 
 import javax.xml.transform.Source;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class MappingEngineImpl implements MappingEngine {
 
 	MappingRepository repository;
