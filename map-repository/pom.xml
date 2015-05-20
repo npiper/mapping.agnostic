@@ -4,23 +4,65 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.solveapuzzle.mapping.agnostic</groupId>
-    <artifactId>core</artifactId>
+    <artifactId>build.parent</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <relativePath>../build/build.parent</relativePath>
   </parent>
-  <groupId>com.solveapuzzle.mapping.agnostic</groupId>
+ 
   <artifactId>map-repository</artifactId>
-  <version>1.0-SNAPSHOT</version>
+
   <name>map-repository</name>
   <url>http://maven.apache.org</url>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
+
+  <dependency>
+  	<groupId>com.solveapuzzle.mapping.agnostic</groupId>
+  	<artifactId>map-api</artifactId>
+  	<version>1.0-SNAPSHOT</version>
+  </dependency>
+  
+  <!-- Hibernate, Spring & Persistence dependencies -->
+  
+  <!--  Reference:  http://www.byteslounge.com/tutorials/spring-with-hibernate-persistence-and-transactions-example -->
+  
+   <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-tx</artifactId>
+      <version>${spring.version}</version>
     </dependency>
+    
+    <dependency>
+       <groupId>org.springframework</groupId>
+       <artifactId>spring-orm</artifactId>
+       <version>${spring.version}</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>commons-dbcp</groupId>
+      <artifactId>commons-dbcp</artifactId>
+      <version>1.2.2</version>
+    </dependency>
+    
+    <dependency>
+    	<groupId>javax.persistence</groupId>
+    	<artifactId>persistence-api</artifactId>
+    	<version>1.0</version>
+    </dependency>
+    
+    <dependency>
+       <groupId>org.hibernate</groupId>
+       <artifactId>hibernate-core</artifactId>
+       <version>4.1.9.Final</version>
+    </dependency>
+    
+            <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+  
   </dependencies>
 </project>
