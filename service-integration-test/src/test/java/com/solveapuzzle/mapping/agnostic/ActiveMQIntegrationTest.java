@@ -9,10 +9,14 @@ package com.solveapuzzle.mapping.agnostic;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.jms.JMSException;
 
+import org.apache.commons.io.IOUtils;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -30,27 +34,50 @@ public class ActiveMQIntegrationTest {
 
 	@Autowired
 	private AtomicInteger counter;
-	
+
 	@Autowired
 	private JmsMessageProducer producer;
-	
-	@Autowired JmsMessageListener listener;
 
-	@Test
-	public void testMessageOne() throws InterruptedException, JMSException
-	{
-		
-		  assertNotNull("Counter is null.", counter);
+	@Autowired
+	JmsMessageListener listener;
 
-	        int expectedCount = 100;
-	        
-	        logger.info("Testing...");
-	        
-	        // give listener a chance to process messages
-	        Thread.sleep(2 * 1000);
-	        
-	        assertEquals("Message is not '" + expectedCount + "'.", expectedCount, counter.get());
+	@Autowired
+	MappingEngine engine;
+
+	@Autowired
+	MappingRepositoryInternal repository;
+
+	private static final String TEST_TRANSFORM_VIA_SAXON = "testTransformViaSaxon";
+
+	@Before
+	public void setUp() throws IOException {
+
+		MappingRecord record = new MappingRecord();
+		record.setKey(TEST_TRANSFORM_VIA_SAXON);
+
+		InputStream is = this.getClass().getClassLoader()
+				.getResourceAsStream("Stylesheet.xslt");
+		String xslt = IOUtils.toString(is);
+
+		record.setXmlContent(xslt);
+		repository.insertMappingRecord(record);
+
 	}
 
+	@Test
+	public void testMessageOne() throws InterruptedException, JMSException {
+
+		assertNotNull("Counter is null.", counter);
+
+		int expectedCount = 100;
+
+		logger.info("Testing...");
+
+		// give listener a chance to process messages
+		Thread.sleep(2 * 1000);
+
+		assertEquals("Message is not '" + expectedCount + "'.", expectedCount,
+				counter.get());
+	}
 
 }

@@ -16,6 +16,7 @@
 
 package com.solveapuzzle.mapping.agnostic;
 
+import java.nio.charset.Charset;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.jms.JMSException;
@@ -38,6 +39,12 @@ public class JmsMessageListener implements MessageListener {
 
     private static final Logger logger = LoggerFactory.getLogger(JmsMessageListener.class);
 
+    protected static final String PARSER = "parser";
+    protected static final String TRANSFORM = "transformKey";
+    
+    @Autowired
+    private MappingEngine engine;
+    
     @Autowired
     private AtomicInteger counter = null;
 
@@ -48,18 +55,64 @@ public class JmsMessageListener implements MessageListener {
         try {   
             int messageCount = message.getIntProperty(JmsMessageProducer.MESSAGE_COUNT);
             
+            logger.info("Processed message '{}'.  value={}", message, messageCount);
+            
+            counter.incrementAndGet();
+            
             if (message instanceof TextMessage) {
                 TextMessage tm = (TextMessage)message;
                 String msg = tm.getText();
                 
                 
-                logger.info("Processed message '{}'.  value={}", msg, messageCount);
+
                 
-                counter.incrementAndGet();
+                try {
+					engine.onTransformEvent(createConfig(tm), tm.getText(), Charset.defaultCharset());
+				} catch (MappingException e) {
+					logger.error("Mapping exception from transformation ",e);
+					throw new RuntimeException(e);
+				} catch (ConfigurationException e) {
+					logger.error("Configuration exception from transformation",e);
+					throw new RuntimeException(e);
+				}
+                
+                
+
+                
+                
             }
         } catch (JMSException e) {
             logger.error(e.getMessage(), e);
+            throw new RuntimeException(e);
         }
     }
+
+	private MappingConfiguration createConfig(final TextMessage tm) {
+		// TODO Auto-generated method stub
+		return new MappingConfiguration() {
+			
+			@Override
+			public String getMappingType() {
+				// TODO Auto-generated method stub
+				try {
+					return tm.getStringProperty(PARSER);
+				} catch (JMSException e) {
+					logger.error("Failed to get mapping type of Parser from msg header",e);
+					throw new RuntimeException(e);
+				}
+			}
+			
+			@Override
+			public String getMappingIdentifer() {
+				// TODO Auto-generated method stub
+				try {
+					return tm.getStringProperty(TRANSFORM);
+				} catch (JMSException e) {
+					logger.error("Failed to get transform key from msg header",e);
+					throw new RuntimeException(e);
+				}
+			}
+		};
+	}
     
 }
