@@ -20,8 +20,8 @@ public class MappingRecord {
 	@Column(name = "KEY", nullable = false)
 	private String key;
 	
-	@Column(name = "XMLCONTENT", nullable = false)
-	//@Lob
+	@Column(name = "XMLCONTENT", nullable = false,length = Integer.MAX_VALUE)
+	@Lob
     private String xmlContent;
 
 	public int getId() {
