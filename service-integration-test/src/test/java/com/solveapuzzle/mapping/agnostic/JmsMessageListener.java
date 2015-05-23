@@ -35,84 +35,84 @@ import org.springframework.stereotype.Component;
  * @author David Winterfeldt
  */
 @Component
-public class JmsMessageListener implements MessageListener { 
+public class JmsMessageListener implements MessageListener {
 
-    private static final Logger logger = LoggerFactory.getLogger(JmsMessageListener.class);
+	private static final Logger logger = LoggerFactory
+			.getLogger(JmsMessageListener.class);
 
-    protected static final String PARSER = "parser";
-    protected static final String TRANSFORM = "transformKey";
-    
-    @Autowired
-    private MappingEngine engine;
-    
-    @Autowired
-    private AtomicInteger counter = null;
+	protected static final String PARSER = "parser";
+	protected static final String TRANSFORM = "transformKey";
 
-    /**
-     * Implementation of <code>MessageListener</code>.
-     */
-    public void onMessage(Message message) {
-        try {   
-            int messageCount = message.getIntProperty(JmsMessageProducer.MESSAGE_COUNT);
-            
-            logger.info("Processed message '{}'.  value={}", message, messageCount);
-            
-            counter.incrementAndGet();
-            
-            if (message instanceof TextMessage) {
-                TextMessage tm = (TextMessage)message;
-                String msg = tm.getText();
-                
-                
+	@Autowired
+	private MappingEngine engine;
 
-                
-                try {
-					engine.onTransformEvent(createConfig(tm), tm.getText(), Charset.defaultCharset());
+	@Autowired
+	private AtomicInteger counter = null;
+
+	/**
+	 * Implementation of <code>MessageListener</code>.
+	 */
+	public void onMessage(Message message) {
+		try {
+			int messageCount = message
+					.getIntProperty(JmsMessageProducer.MESSAGE_COUNT);
+
+			logger.info("Processed message '{}'.  value={}", message,
+					messageCount);
+
+			counter.incrementAndGet();
+
+			if (message instanceof TextMessage) {
+				TextMessage tm = (TextMessage) message;
+				String msg = tm.getText();
+
+				logger.info(" Read Transform property "
+						+ message.getStringProperty(TRANSFORM));
+
+				try {
+					
+					String parser = tm.getStringProperty(PARSER);
+					String key = tm.getStringProperty(TRANSFORM);
+					
+					logger.info(" Read Transform propertys "
+							+ parser + " " + key);
+					
+					String response = engine.onTransformEvent(this.createConfig(parser, key),
+							tm.getText(), Charset.defaultCharset());
+
+					System.out.println(" Response " + response);
 				} catch (MappingException e) {
-					logger.error("Mapping exception from transformation ",e);
+					logger.error("Mapping exception from transformation ", e);
 					throw new RuntimeException(e);
 				} catch (ConfigurationException e) {
-					logger.error("Configuration exception from transformation",e);
+					logger.error("Configuration exception from transformation",
+							e);
 					throw new RuntimeException(e);
 				}
-                
-                
 
-                
-                
-            }
-        } catch (JMSException e) {
-            logger.error(e.getMessage(), e);
-            throw new RuntimeException(e);
-        }
-    }
+			}
+		} catch (JMSException e) {
+			logger.error(e.getMessage(), e);
+			throw new RuntimeException(e);
+		}
+	}
 
-	private MappingConfiguration createConfig(final TextMessage tm) {
+	private MappingConfiguration createConfig(final String parser,
+			final String key) {
 		// TODO Auto-generated method stub
 		return new MappingConfiguration() {
-			
-			@Override
+
 			public String getMappingType() {
 				// TODO Auto-generated method stub
-				try {
-					return tm.getStringProperty(PARSER);
-				} catch (JMSException e) {
-					logger.error("Failed to get mapping type of Parser from msg header",e);
-					throw new RuntimeException(e);
-				}
+
+				return parser;
+
 			}
-			
-			@Override
+
 			public String getMappingIdentifer() {
-				// TODO Auto-generated method stub
-				try {
-					return tm.getStringProperty(TRANSFORM);
-				} catch (JMSException e) {
-					logger.error("Failed to get transform key from msg header",e);
-					throw new RuntimeException(e);
-				}
+				return key;
 			}
 		};
 	}
-    
+
 }

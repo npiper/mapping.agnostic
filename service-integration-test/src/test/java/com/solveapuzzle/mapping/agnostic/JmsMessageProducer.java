@@ -50,7 +50,7 @@ public class JmsMessageProducer {
 
     @Autowired
     private JmsTemplate template = null;
-    private int messageCount = 100;
+    private int messageCount = 3;
 
     /**
      * Generates JMS messages
@@ -74,7 +74,10 @@ public class JmsMessageProducer {
                     message.setStringProperty(PARSER, "xercesMapper");
                     message.setIntProperty(MESSAGE_COUNT, index);
                     
-                    logger.info("Sending message: " + text);
+                    logger.info("Sending message: " + text + " \n " + xml);
+                    
+                    logger.info(" Transform property " +
+                    	message.getStringProperty(TRANSFORM));
                     
                     return message;
                 }

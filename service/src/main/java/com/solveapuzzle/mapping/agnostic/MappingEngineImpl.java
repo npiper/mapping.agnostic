@@ -10,12 +10,15 @@ import java.nio.charset.Charset;
 
 import javax.xml.transform.Source;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class MappingEngineImpl implements MappingEngine {
 
+	@Autowired
 	MappingRepository repository;
+	
 	MapperFactory<Source,OutputStream> factory;
 	
 	public void setMapperFactory(MapperFactory<Source,OutputStream> factory)
@@ -30,7 +33,12 @@ public class MappingEngineImpl implements MappingEngine {
 	
 	public String onTransformEvent(MappingConfiguration config, String Body, Charset encoding) throws MappingException, ConfigurationException {
 		
+		if (config == null) { throw new RuntimeException("No configuration object provided - null exception");}
+		
+		if (repository == null) { throw new RuntimeException("Repository not injected - null pointer"); }
+
 		Mapper<Source,OutputStream> mapper = factory.createMapper(config.getMappingType());
+		
 		
 		java.lang.String mappingToApply = repository.getMappingSource(config.getMappingIdentifer());
 		

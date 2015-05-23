@@ -36,7 +36,7 @@ public class MappingRepositoryTest {
 		
 		String xml = mappingRepository.getMappingSource("KEY1");
 		
-		
+		Assert.assertEquals("<xml/>",xml);
 		
 	}
 	

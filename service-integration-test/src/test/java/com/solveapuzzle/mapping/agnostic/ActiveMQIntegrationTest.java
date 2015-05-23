@@ -67,9 +67,18 @@ public class ActiveMQIntegrationTest {
 	@Test
 	public void testMessageOne() throws InterruptedException, JMSException {
 
+		String source = repository.getMappingSource(TEST_TRANSFORM_VIA_SAXON);
+
+		if (source == null || source.isEmpty()) {
+			throw new RuntimeException(
+					"Did not set up repository correctly - no XSLT record");
+		}
+
+		System.out.println("XSLT returned " + source);
+
 		assertNotNull("Counter is null.", counter);
 
-		int expectedCount = 100;
+		int expectedCount = 3;
 
 		logger.info("Testing...");
 

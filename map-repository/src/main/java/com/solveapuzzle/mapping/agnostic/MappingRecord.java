@@ -20,8 +20,9 @@ public class MappingRecord {
 	@Column(name = "KEY", nullable = false)
 	private String key;
 	
-	@Column(name = "XMLCONTENT", nullable = false,length = Integer.MAX_VALUE)
-	@Lob
+	@Column(name = "XMLCONTENT", length = 1024)
+	//length = Integer.MAX_VALUE
+	//@Lob
     private String xmlContent;
 
 	public int getId() {
@@ -50,7 +51,7 @@ public class MappingRecord {
 	/**
 	 * @param xmlContent the xmlContent to set
 	 */
-	public void setXmlContent(String xmlContent) {
-		this.xmlContent = xmlContent;
+	public void setXmlContent(String xml) {
+		this.xmlContent = xml;
 	}
 }

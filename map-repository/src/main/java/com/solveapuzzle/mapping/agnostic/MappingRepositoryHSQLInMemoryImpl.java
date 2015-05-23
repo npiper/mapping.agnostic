@@ -21,7 +21,14 @@ public class MappingRepositoryHSQLInMemoryImpl implements MappingRepositoryInter
 	@Transactional
 	public String getMappingSource(String key) {
 		
-		return mappingRecordDAO.getMappingRecordByKey(key).getXmlContent();
+		MappingRecord record = mappingRecordDAO.getMappingRecordByKey(key);
+		if (record == null) {throw new RuntimeException("Could not find record for key = " + key);		}
+		
+	   String content = record.getXmlContent();
+		
+	   if (content == null || content.isEmpty()) {throw new RuntimeException("Empty XSLT content for MappingRecord");}
+	   
+		return content;
 	}
 
 }

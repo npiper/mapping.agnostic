@@ -16,7 +16,8 @@ public class MappingRecordDAOImpl implements MappingRecordDAO
 		
 	public void insertMappingRecord(MappingRecord record) {
 		sessionFactory.getCurrentSession().save(record);
-		
+		sessionFactory.getCurrentSession().flush();
+
 	}
 
 	public MappingRecord getMappingRecordById(int recordId) {
