@@ -18,12 +18,12 @@ package com.solveapuzzle.mapping.agnostic;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.UUID;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
+import javax.jms.Destination;
 import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.Session;
-import javax.jms.TextMessage;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -36,53 +36,56 @@ import org.springframework.stereotype.Component;
 /**
  * Generates JMS messages
  * 
- * @author David Winterfeldt
+ * @author Neil Piper
  */
 @Component
 public class JmsMessageProducer {
 
-    private static final Logger logger = LoggerFactory.getLogger(JmsMessageProducer.class);
+	private static final Logger logger = LoggerFactory
+			.getLogger(JmsMessageProducer.class);
 
-    protected static final String MESSAGE_COUNT = "messageCount";
-    protected static final String PARSER = "parser";
-    protected static final String TRANSFORM = "transformKey";
+	protected static final String MESSAGE_COUNT = "messageCount";
+	protected static final String PARSER = "parser";
+	protected static final String TRANSFORM = "transformKey";
 	private static final String TEST_TRANSFORM_VIA_SAXON = "testTransformViaSaxon";
 
-    @Autowired
-    private JmsTemplate template = null;
-    private int messageCount = 3;
+	@Resource(name = "outdestination")
+	private Destination replyToQueue = null;
 
-    /**
-     * Generates JMS messages
-     * @throws IOException 
-     */
-    @PostConstruct
-    public void generateMessages() throws JMSException, IOException {
-        for (int i = 0; i < messageCount; i++) {
-            final int index = i;
-            final String text = "Message number is " + i + ".";
-            
-            InputStream inXML = this.getClass().getClassLoader()
-    				.getResourceAsStream("inXML.xml");
-            final String xml = IOUtils.toString(inXML);
+	@Autowired
+	private JmsTemplate template = null;
+	private int messageCount = 3;
 
-            template.send(new MessageCreator() {
-                public Message createMessage(Session session) throws JMSException {
-                    TextMessage message = session.createTextMessage(xml);
-                    
-                    message.setStringProperty(TRANSFORM, TEST_TRANSFORM_VIA_SAXON);
-                    message.setStringProperty(PARSER, "xercesMapper");
-                    message.setIntProperty(MESSAGE_COUNT, index);
-                    
-                    logger.info("Sending message: " + text + " \n " + xml);
-                    
-                    logger.info(" Transform property " +
-                    	message.getStringProperty(TRANSFORM));
-                    
-                    return message;
-                }
-            });
-        }
-    }
+	/**
+	 * Generates JMS messages
+	 * 
+	 * @throws IOException
+	 */
+	@PostConstruct
+	public void generateMessages() throws JMSException, IOException {
+		for (int i = 0; i < messageCount; i++) {
+			final int index = i;
+			final String text = "Message number is " + i + ".";
+
+			InputStream inXML = this.getClass().getClassLoader()
+					.getResourceAsStream("inXML.xml");
+			final String xml = IOUtils.toString(inXML);
+
+			String correlationId = UUID.randomUUID().toString();
+
+			if (replyToQueue == null) {
+				throw new RuntimeException("No Reply to Queue!");
+			}
+
+			MessageCreator creator = new XmlRequestReplyMessageCreator(
+					correlationId, xml, index, replyToQueue);
+
+			javax.jms.Queue queue = (javax.jms.Queue) replyToQueue;
+			logger.info("ReplyTo Queue name (Producer)= " + queue.getQueueName());
+			
+			
+			template.send(creator);
+		}
+	}
 
 }

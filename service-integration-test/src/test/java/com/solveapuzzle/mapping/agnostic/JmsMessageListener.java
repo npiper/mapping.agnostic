@@ -19,6 +19,7 @@ package com.solveapuzzle.mapping.agnostic;
 import java.nio.charset.Charset;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import javax.annotation.Resource;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
@@ -27,6 +28,7 @@ import javax.jms.TextMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.annotation.EnableJms;
 import org.springframework.stereotype.Component;
 
 /**
@@ -48,6 +50,9 @@ public class JmsMessageListener implements MessageListener {
 
 	@Autowired
 	private AtomicInteger counter = null;
+	
+	@Resource(name="outdestination")
+	javax.jms.Destination outDestination = null;
 
 	/**
 	 * Implementation of <code>MessageListener</code>.
@@ -80,13 +85,31 @@ public class JmsMessageListener implements MessageListener {
 					String response = engine.onTransformEvent(this.createConfig(parser, key),
 							tm.getText(), Charset.defaultCharset());
 
-					System.out.println(" Response " + response);
+					logger.info(" Response " + response);
+					
+					logger.info("message ReplyTo ID " + tm.getJMSCorrelationID());
+
+					tm.setJMSDestination(this.outDestination);
+					
+					javax.jms.Queue queue = (javax.jms.Queue) tm.getJMSDestination();
+					logger.info("ReplyTo Queue name = " + queue.getQueueName());
+					
+					tm.clearBody();
+					
+					tm.setText(response);
+					// Push to response queue
+		
+					
 				} catch (MappingException e) {
 					logger.error("Mapping exception from transformation ", e);
+					// push to mapping error Queue?
+					// May be fixable with input xml change or due to data quality, invalid against schema
+					
 					throw new RuntimeException(e);
 				} catch (ConfigurationException e) {
 					logger.error("Configuration exception from transformation",
 							e);
+					// Can't fix - dead letter queue - but worth tracing what config went missing?
 					throw new RuntimeException(e);
 				}
 
