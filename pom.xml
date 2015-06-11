@@ -15,6 +15,7 @@
     <module>container</module>
     <module>map-repository</module>
     <module>service-integration-test</module>
+    <module>service-spring-integration</module>
   </modules>
 
 </project>
