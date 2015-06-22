@@ -17,12 +17,12 @@
 	</bean>
 
 	<bean id="requestQueue" class="org.apache.activemq.command.ActiveMQQueue">
-		<constructor-arg value="XML2.IN"/>
+		<constructor-arg value="XML1.IN"/>
 	</bean>
 
 
 	<bean id="replyQueue" class="org.apache.activemq.command.ActiveMQQueue">
-		<constructor-arg value="XML2.OUT"/>
+		<constructor-arg value="XML1.OUT"/>
 	</bean>
 
 <integration:poller id="poller" default="true" fixed-rate="1000"/>
