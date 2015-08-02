@@ -57,6 +57,16 @@ public class SpringServiceIntegrationTest {
 				// TODO Auto-generated method stub
 				return "test";
 			}
+
+			public Priority getPriority() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			public Charset getCharacterEncoding() {
+				// TODO Auto-generated method stub
+				return null;
+			}
 		};
 	}
 	

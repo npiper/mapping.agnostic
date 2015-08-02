@@ -63,6 +63,18 @@ public class EngineIntegrationTest {
 				// TODO Auto-generated method stub
 				return TEST_TRANSFORM_VIA_SAXON;
 			}
+
+			@Override
+			public Charset getCharacterEncoding() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public Priority getPriority() {
+				// TODO Auto-generated method stub
+				return null;
+			}
 		};
 	}
 

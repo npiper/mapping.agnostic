@@ -135,6 +135,18 @@ public class JmsMessageListener implements MessageListener {
 			public String getMappingIdentifer() {
 				return key;
 			}
+
+			@Override
+			public Charset getCharacterEncoding() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public Priority getPriority() {
+				// TODO Auto-generated method stub
+				return null;
+			}
 		};
 	}
 
