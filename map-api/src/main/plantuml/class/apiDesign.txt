@@ -1,0 +1,45 @@
+@startuml
+
+package java.lang {
+
+  class Exception
+  class RuntimeException
+
+}
+
+package "com.solveapuzzle.mapping.agnostic" #DDDDDD {
+  
+   interface Mapper
+   interface MapperFactory
+   interface MappingConfiguration
+   interface MappingRepository
+
+   Mapper : void map(A source , B resultStream, MappingConfiguration config)
+   MapperFactory : Mapper createMapper( String key)
+   MappingConfiguration : Priority getPriority()
+   MappingConfiguration : String getMappingIdentifier()
+   MappingConfiguration : String getMappingType()
+   MappingConfiguration : Charset getCharacterEncoding()
+   MappingRepository : String getMappingSource(String key)
+ 
+   class ExpectedException
+   class UnexpectedException
+   class ConfigurationException
+   class MappingException
+
+   RuntimeException <|-- UnexpectedException
+   Exception <|-- ExpectedException
+   ExpectedException <|-- ConfigurationException
+   ExpectedException <|-- MappingException
+
+   
+  enum Priority {
+   low
+   medium
+   high
+   emergency
+  }
+
+}
+
+@enduml

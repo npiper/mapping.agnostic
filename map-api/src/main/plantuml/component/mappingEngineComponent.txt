@@ -1,0 +1,13 @@
+@startuml
+
+[XmlIn] - [MappingEngineImpl]
+[MappingEngineImpl] - [XmlOut]
+
+database "XmlIn" <<queue>> {
+
+}
+
+database "XmlOut" <<queue>> {
+
+}
+@enduml

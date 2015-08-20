@@ -1,0 +1,23 @@
+@startuml
+
+
+package "com.solveapuzzle.mapping.agnostic" #DDDDDD {
+  
+   interface Mapper
+   interface MapperFactory
+   interface MappingConfiguration
+   interface MappingRepository
+
+   interface MappingEngine
+   class MappingEngineImpl
+
+   MappingEngine : String onTransformEvent(MappingConfiguration config, String body, Charset encoding)
+   
+   MappingEngine <|-- MappingEngineImpl
+
+   MappingEngineImpl *-- MapperFactory
+   MappingEngineImpl *-- MappingRepository
+
+}
+
+@enduml

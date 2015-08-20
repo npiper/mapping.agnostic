@@ -26,6 +26,7 @@ public class Ticket implements Serializable {
     private Date issueDateTime;
     private String description;
     private Priority priority;
+    private String body;
 
     public Ticket() {
     }

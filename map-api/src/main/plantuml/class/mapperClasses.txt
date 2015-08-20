@@ -1,0 +1,20 @@
+@startuml
+
+
+package "com.solveapuzzle.mapping.agnostic" {
+  
+   interface Mapper
+
+
+   class AbstractJaxpMapper
+   class SaxonMapper
+   class XercesMapper
+
+   Mapper <|-- AbstractJaxpMapper
+   AbstractJaxpMapper <|-- SaxonMapper
+   AbstractJaxpMapper <|-- XercesMapper
+   Mapper <|-- VtdMapper
+
+}
+
+@enduml
